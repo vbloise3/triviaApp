@@ -1,0 +1,45 @@
+{
+  "schema_version": "2.0",
+  "resources": [
+    {
+      "role_name": "triviaApp-dev-autoconfirm_user",
+      "role_arn": "arn:aws:iam::001178231653:role/triviaApp-dev-autoconfirm_user",
+      "name": "autoconfirm_user_role",
+      "resource_type": "iam_role"
+    },
+    {
+      "lambda_arn": "arn:aws:lambda:us-east-2:001178231653:function:triviaApp-dev-autoconfirm_user",
+      "name": "autoconfirm_user",
+      "resource_type": "lambda_function"
+    },
+    {
+      "role_name": "triviaApp-dev-add_user",
+      "role_arn": "arn:aws:iam::001178231653:role/triviaApp-dev-add_user",
+      "name": "add_user_role",
+      "resource_type": "iam_role"
+    },
+    {
+      "lambda_arn": "arn:aws:lambda:us-east-2:001178231653:function:triviaApp-dev-add_user",
+      "name": "add_user",
+      "resource_type": "lambda_function"
+    },
+    {
+      "role_name": "triviaApp-dev-api_handler",
+      "role_arn": "arn:aws:iam::001178231653:role/triviaApp-dev-api_handler",
+      "name": "api_handler_role",
+      "resource_type": "iam_role"
+    },
+    {
+      "lambda_arn": "arn:aws:lambda:us-east-2:001178231653:function:triviaApp-dev",
+      "name": "api_handler",
+      "resource_type": "lambda_function"
+    },
+    {
+      "name": "rest_api",
+      "rest_api_id": "fe5usxe5e4",
+      "rest_api_url": "https://fe5usxe5e4.execute-api.us-east-2.amazonaws.com/dev/",
+      "resource_type": "rest_api"
+    }
+  ],
+  "backend": "api"
+}
