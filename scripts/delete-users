@@ -2,11 +2,11 @@
 
 import boto3
 
-POOL_ID = 'us-west-2_Q55mBivo4'
+POOL_ID = 'us-east-2_HqMyKkokN'
 USER_TABLE = 'trivia-users'
 
-cognito_idp = boto3.client('cognito-idp', 'us-west-2')
-dynamodb = boto3.resource('dynamodb', 'us-west-2')
+cognito_idp = boto3.client('cognito-idp', 'us-east-2')
+dynamodb = boto3.resource('dynamodb', 'us-east-2')
 
 
 def delete_users():

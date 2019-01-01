@@ -7,4 +7,4 @@ USERS_TABLE_KEY_NAME = 'username'
 
 
 POOL_ARN = (
-    'arn:aws:cognito-idp:us-west-2:001178231653:userpool/us-west-2_vzTDHFYhq')
+    'arn:aws:cognito-idp:us-east-2:001178231653:userpool/us-east-2_HqMyKkokN')

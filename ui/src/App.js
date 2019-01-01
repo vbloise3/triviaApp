@@ -49,8 +49,8 @@ TriviaDispatcher.register(function(payload) {
 /*global apigClientFactory*/
 
 var poolData = {
-  UserPoolId: 'us-west-2_vzTDHFYhq',
-  ClientId: '4quv9rtk4qrrs9d9piqimhebua'
+  UserPoolId: 'us-east-2_HqMyKkokN',
+  ClientId: '49d8bfc7jp0qbikvvgl19dns6d'
 };
 
 
@@ -117,6 +117,13 @@ class LoggedInUsernameDialog extends Component {
 
   handleOpen = () => {
     this.setState({open: true});
+    TriviaDispatcher.dispatch({
+      actionType: 'update-user',
+      username: UserStore.username,
+      idToken: UserStore.idToken,
+      totalCorrect: 7,
+      totalAnswered: 8
+    });
   };
 
   handleClose = () => {
@@ -524,6 +531,53 @@ class Answers extends Component {
         </TableRow>
       );
     }
+  }
+
+  getUserData() {
+    let authenticationData = {
+      Username: this.state.username,
+      Password: this.state.password,
+    };
+    let authenticationDetails = new AuthenticationDetails(authenticationData);
+    let userPool = new CognitoUserPool(poolData);
+    let userData = {
+      Username: this.state.username,
+      Pool: userPool
+    };
+    let cognitoUser = new CognitoUser(userData);
+    var that = this;
+    cognitoUser.authenticateUser(authenticationDetails, {
+      onSuccess: function (result) {
+        console.log(result);
+        let apigClient = apigClientFactory.newClient();
+        let additionalParams = {
+          headers: {
+            Authorization: result.getIdToken().getJwtToken(),
+          }
+        };
+        apigClient.userGet({}, null, additionalParams).then( function(user_result){
+          console.log(user_result);
+          TriviaDispatcher.dispatch({
+            actionType: 'update-user',
+            username: that.state.username,
+            idToken: result.getIdToken().getJwtToken(),
+            totalCorrect: user_result.data.total_correct,
+            totalAnswered: user_result.data.total_answered
+          });
+          /*TriviaDispatcher.dispatch({
+            actionType: 'change-question',
+            questionId: that.getNextQuestion(user_result.data.answers)
+          });*/
+        }).catch( function(result) {
+          console.log(result)
+          // Add error callback code here.
+        });
+      },
+      onFailure: function (err) {
+        alert(err);
+      },
+
+    });
   }
 }
 

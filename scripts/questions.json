@@ -49,6 +49,16 @@
                 "2009"
             ],
             "correct_answer": "2008"
+        },
+        {
+            "question": "What was a major theme at re:Invent 2018?",
+            "possible_answers": [
+                "Serverless",
+                "VPC",
+                "Snow Mobile",
+                "EC2"
+            ],
+            "correct_answer": "Serverless"
         }
     ]
 }

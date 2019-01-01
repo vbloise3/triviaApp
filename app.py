@@ -78,6 +78,18 @@ def get_user_data():
         'total_answered': user.total_answered
     }
 
+@app.route('/users', cors=True)
+def get_users_data():
+    username = _get_authenticated_username()
+    user_table = chalicelib.users.UsersTable()
+    user = user_table.get_user('vbloise3')
+    return {
+        'usersname': user.username,
+        'answers': user.answers,
+        'total_correct': user.total_correct,
+        'total_answered': user.total_answered
+    }
+
 
 def _get_authenticated_username():
     return app.current_request.context[

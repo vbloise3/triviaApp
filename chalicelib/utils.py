@@ -5,7 +5,7 @@ class DynamoDBTable(object):
     def __init__(self, table_name, key_name):
         self._table_name = table_name
         self._key_name = key_name
-        self._dynamodb = boto3.resource('dynamodb')
+        self._dynamodb = boto3.resource('dynamodb', 'us-east-2')
 
     def get_value_from_db(self, key, include=None):
         get_item_kwargs = {
