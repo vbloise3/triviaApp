@@ -117,13 +117,6 @@ class LoggedInUsernameDialog extends Component {
 
   handleOpen = () => {
     this.setState({open: true});
-    TriviaDispatcher.dispatch({
-      actionType: 'update-user',
-      username: UserStore.username,
-      idToken: UserStore.idToken,
-      totalCorrect: 7,
-      totalAnswered: 8
-    });
   };
 
   handleClose = () => {
@@ -427,6 +420,9 @@ class Answers extends Component {
     let apigClient = apigClientFactory.newClient();
     var that = this;
     var answer = this.props.answers[this.state.selected[0]];
+    // added
+    var additionalParamsG;
+    // end added
     console.log(UserStore.idToken);
     if (UserStore.idToken) {
       var additionalParams = {
@@ -434,6 +430,9 @@ class Answers extends Component {
           Authorization: UserStore.idToken,
         }
       };
+      // added
+      additionalParamsG = additionalParams;
+      // end added
       apigClient.questionsQuestionIdUserPost({question_id: this.props.questionId}, {answer: answer}, additionalParams).then(function (result) {
         that.setState({
           selectedAnswer: answer,
@@ -446,6 +445,7 @@ class Answers extends Component {
         console.log(result)
         // Add error callback code here.
       });
+
     } else {
       apigClient.questionsQuestionIdPost({question_id: this.props.questionId}, {answer: answer}).then(function (result) {
         that.setState({
@@ -460,6 +460,21 @@ class Answers extends Component {
         // Add error callback code here.
       });
     }
+    // get user data -- Put this in next question instead
+            apigClient.userGet({}, null, additionalParamsG).then( function(user_result){
+              console.log(user_result);
+              TriviaDispatcher.dispatch({
+                actionType: 'update-user',
+                username: UserStore.username,
+                idToken: UserStore.idToken,
+                totalCorrect: user_result.data.total_correct,
+                totalAnswered: user_result.data.total_answered
+              });
+            }).catch( function(result) {
+              console.log(result)
+              // Add error callback code here.
+            });
+    // end get user data
   }
 
   nextQuestion() {
@@ -531,53 +546,6 @@ class Answers extends Component {
         </TableRow>
       );
     }
-  }
-
-  getUserData() {
-    let authenticationData = {
-      Username: this.state.username,
-      Password: this.state.password,
-    };
-    let authenticationDetails = new AuthenticationDetails(authenticationData);
-    let userPool = new CognitoUserPool(poolData);
-    let userData = {
-      Username: this.state.username,
-      Pool: userPool
-    };
-    let cognitoUser = new CognitoUser(userData);
-    var that = this;
-    cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: function (result) {
-        console.log(result);
-        let apigClient = apigClientFactory.newClient();
-        let additionalParams = {
-          headers: {
-            Authorization: result.getIdToken().getJwtToken(),
-          }
-        };
-        apigClient.userGet({}, null, additionalParams).then( function(user_result){
-          console.log(user_result);
-          TriviaDispatcher.dispatch({
-            actionType: 'update-user',
-            username: that.state.username,
-            idToken: result.getIdToken().getJwtToken(),
-            totalCorrect: user_result.data.total_correct,
-            totalAnswered: user_result.data.total_answered
-          });
-          /*TriviaDispatcher.dispatch({
-            actionType: 'change-question',
-            questionId: that.getNextQuestion(user_result.data.answers)
-          });*/
-        }).catch( function(result) {
-          console.log(result)
-          // Add error callback code here.
-        });
-      },
-      onFailure: function (err) {
-        alert(err);
-      },
-
-    });
   }
 }
 
