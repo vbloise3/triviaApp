@@ -441,6 +441,21 @@ class Answers extends Component {
           selected: [-1]
         });
         console.log(result)
+        // get user data -- added this apig call to update results after question is answered
+            apigClient.userGet({}, null, additionalParamsG).then( function(user_result){
+              console.log(user_result);
+              TriviaDispatcher.dispatch({
+                actionType: 'update-user',
+                username: UserStore.username,
+                idToken: UserStore.idToken,
+                totalCorrect: user_result.data.total_correct,
+                totalAnswered: user_result.data.total_answered
+              });
+            }).catch( function(result) {
+              console.log(result)
+              // Add error callback code here.
+            });
+        // end get user data
       }).catch(function (result) {
         console.log(result)
         // Add error callback code here.
@@ -460,21 +475,6 @@ class Answers extends Component {
         // Add error callback code here.
       });
     }
-    // get user data -- Put this in next question instead, will have to add full authentificationData logic
-            apigClient.userGet({}, null, additionalParamsG).then( function(user_result){
-              console.log(user_result);
-              TriviaDispatcher.dispatch({
-                actionType: 'update-user',
-                username: UserStore.username,
-                idToken: UserStore.idToken,
-                totalCorrect: user_result.data.total_correct,
-                totalAnswered: user_result.data.total_answered
-              });
-            }).catch( function(result) {
-              console.log(result)
-              // Add error callback code here.
-            });
-    // end get user data
   }
 
   nextQuestion() {
