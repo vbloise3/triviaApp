@@ -460,7 +460,7 @@ class Answers extends Component {
         // Add error callback code here.
       });
     }
-    // get user data -- Put this in next question instead
+    // get user data -- Put this in next question instead, will have to add full authentificationData logic
             apigClient.userGet({}, null, additionalParamsG).then( function(user_result){
               console.log(user_result);
               TriviaDispatcher.dispatch({
