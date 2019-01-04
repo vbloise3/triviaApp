@@ -12,3 +12,13 @@
 .App-intro {
   font-size: large;
 }
+
+.App-buttons {
+  float: right;
+  position: relative;
+  top: -90px;
+}
+
+.App-button-placement {
+  padding-bottom: 0.5em;
+}

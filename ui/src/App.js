@@ -96,8 +96,12 @@ class App extends Component {
         <div className="App">
           <div className="App-header">
             <h1>Chalice Trivia</h1>
-            {userLogIn}
-            <SignUpDialog/>
+            <div className="App-buttons">
+                <div className="App-button-placement">
+                    {userLogIn}
+                </div>
+                <SignUpDialog/>
+            </div>
           </div>
           <div className="App-intro">
             <QuestionWithAnswers questionId={this.state.currentQuestionId}/>
@@ -123,6 +127,23 @@ class LoggedInUsernameDialog extends Component {
     this.setState({open: false});
   };
 
+  // reset user's state
+  handleReset = () => {
+    TriviaDispatcher.dispatch({
+      actionType: 'update-user',
+      username: this.props.username,
+      idToken: UserStore.idToken,
+      totalCorrect: 0,
+      totalAnswered: 0
+    });
+    TriviaDispatcher.dispatch({
+      actionType: 'change-question',
+      questionId: '1'
+    });
+    this.handleClose();
+  }
+  // end reset user's state
+
   handleLogOut() {
     TriviaDispatcher.dispatch({
       actionType: 'update-user',
@@ -145,6 +166,11 @@ class LoggedInUsernameDialog extends Component {
         primary={true}
         onTouchTap={this.handleClose}
       />,
+      /*<FlatButton
+        label="Reset"
+        primary={true}
+        onTouchTap={this.handleReset.bind(this)}
+      />,*/
       <FlatButton
         label="Log Out"
         primary={true}
