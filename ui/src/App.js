@@ -44,6 +44,19 @@ TriviaDispatcher.register(function(payload) {
   if (payload.actionType === 'change-question') {
     CurrentQuestionStore.questionId = payload.questionId;
   }
+  if (payload.actionType === 'reset-user') {
+    // update users table
+    let apigClient = apigClientFactory.newClient();
+    var that = this;
+    var additionalParams = {
+          headers: {
+              Authorization: UserStore.idToken,
+          }
+    };
+    apigClient.resetuserGet({}, null, additionalParams).then( function(user_result){
+      console.log(user_result);
+    });
+  }
 });
 
 /*global apigClientFactory*/
@@ -130,7 +143,7 @@ class LoggedInUsernameDialog extends Component {
   // reset user's state
   handleReset = () => {
     TriviaDispatcher.dispatch({
-      actionType: 'update-user',
+      actionType: 'reset-user',
       username: this.props.username,
       idToken: UserStore.idToken,
       totalCorrect: 0,
@@ -140,6 +153,7 @@ class LoggedInUsernameDialog extends Component {
       actionType: 'change-question',
       questionId: '1'
     });
+
     this.handleClose();
   }
   // end reset user's state
@@ -166,11 +180,11 @@ class LoggedInUsernameDialog extends Component {
         primary={true}
         onTouchTap={this.handleClose}
       />,
-      /*<FlatButton
+      <FlatButton
         label="Reset"
         primary={true}
         onTouchTap={this.handleReset.bind(this)}
-      />,*/
+      />,
       <FlatButton
         label="Log Out"
         primary={true}
@@ -446,9 +460,6 @@ class Answers extends Component {
     let apigClient = apigClientFactory.newClient();
     var that = this;
     var answer = this.props.answers[this.state.selected[0]];
-    // added
-    var additionalParamsG;
-    // end added
     console.log(UserStore.idToken);
     if (UserStore.idToken) {
       var additionalParams = {
@@ -456,9 +467,6 @@ class Answers extends Component {
           Authorization: UserStore.idToken,
         }
       };
-      // added
-      additionalParamsG = additionalParams;
-      // end added
       apigClient.questionsQuestionIdUserPost({question_id: this.props.questionId}, {answer: answer}, additionalParams).then(function (result) {
         that.setState({
           selectedAnswer: answer,
@@ -468,7 +476,7 @@ class Answers extends Component {
         });
         console.log(result)
         // get user data -- added this apig call to update results after question is answered
-            apigClient.userGet({}, null, additionalParamsG).then( function(user_result){
+            apigClient.userGet({}, null, additionalParams).then( function(user_result){
               console.log(user_result);
               TriviaDispatcher.dispatch({
                 actionType: 'update-user',

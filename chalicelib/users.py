@@ -83,23 +83,16 @@ class UsersTable(DynamoDBTable):
             )
 
     def reset_user(self, username):
-        try:
-            self._dynamodb.Table(self._table_name).update_item(
-                Key={
-                    'username': username
-                },
-                UpdateExpression="set answers = :a, total_answered=:t, total_correct=:c",
-                ExpressionAttributeValues={
-                    ':a': {},
-                    ':t': 0,
-                    ':c': 0
-                },
-                ReturnValues="UPDATED_NEW"
-            )
-        except self._dynamodb.meta.client.exceptions.\
-                ConditionalCheckFailedException:
-            raise UserAlreadyAnsweredError(
-                'User \'%s\' has already answered this question. A specific '
-                'user is only allowed to answer a question once.' % username
-            )
+        self._dynamodb.Table(self._table_name).update_item(
+            Key={
+                'username': username
+            },
+            UpdateExpression="set answers = :a, total_answered=:t, total_correct=:c",
+            ExpressionAttributeValues={
+                ':a': {},
+                ':t': 0,
+                ':c': 0
+            },
+            ReturnValues="UPDATED_NEW"
+        )
 

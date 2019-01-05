@@ -173,6 +173,42 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.resetuserGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var resetuserGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/resetuser').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(resetuserGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.resetuserOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var resetuserOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/resetuser').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(resetuserOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.userGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
