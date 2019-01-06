@@ -82,7 +82,7 @@ class UsersTable(DynamoDBTable):
                 'user is only allowed to answer a question once.' % username
             )
 
-    def reset_user(self, username):
+    def reset_user(self, username, totalanswered, totalcorrect):
         self._dynamodb.Table(self._table_name).update_item(
             Key={
                 'username': username
@@ -90,8 +90,8 @@ class UsersTable(DynamoDBTable):
             UpdateExpression="set answers = :a, total_answered=:t, total_correct=:c",
             ExpressionAttributeValues={
                 ':a': {},
-                ':t': 0,
-                ':c': 0
+                ':t': totalanswered,
+                ':c': totalcorrect
             },
             ReturnValues="UPDATED_NEW"
         )

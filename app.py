@@ -83,10 +83,19 @@ def get_user_data():
 def reset_user_data():
     username = _get_authenticated_username()
     user_table = chalicelib.users.UsersTable()
-    user = user_table.reset_user(username)
+    user = user_table.reset_user(username, 0, 0)
     return {
         'result': user
     }
+
+
+@app.route('/resettest/{user_id}', authorizer=cognito_authorizer, methods=['POST'], cors=True)
+def reset_user_data(user_id):
+    username = _get_authenticated_username()
+    user_table = chalicelib.users.UsersTable()
+    user_table.reset_user(user_id, 0, 0)
+
+    return get_user_data()
 
 
 def _get_authenticated_username():

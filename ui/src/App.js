@@ -53,8 +53,10 @@ TriviaDispatcher.register(function(payload) {
               Authorization: UserStore.idToken,
           }
     };
-    apigClient.resetuserGet({}, null, additionalParams).then( function(user_result){
-      console.log(user_result);
+    apigClient.resettestUserIdPost({user_id: UserStore.username}, {user_id: UserStore.username}, additionalParams).then( function(result){
+      UserStore.totalAnswered = result.data.total_answered
+      UserStore.totalCorrect = result.data.total_correct
+      console.log("returned user: " + result.data.usersname + " returned total answered: " + result.data.total_answered + " returned total correct " + result.data.total_correct);
     });
   }
 });
