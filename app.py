@@ -83,7 +83,7 @@ def get_user_data():
 def reset_user_data(user_id):
     username = _get_authenticated_username()
     user_table = chalicelib.users.UsersTable()
-    user_table.reset_user(user_id, 0, 0)
+    user_table.reset_user(user_id, app.current_request.json_body['totalanswered'], app.current_request.json_body['totalcorrect'])
 
     return get_user_data()
 
