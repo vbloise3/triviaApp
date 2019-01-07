@@ -173,75 +173,39 @@ apigClientFactory.newClient = function (config) {
     };
     
     
-    apigClient.resettestUserIdPost = function (params, body, additionalParams) {
+    apigClient.resetuserUserIdPost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
         apiGateway.core.utils.assertParametersDefined(params, ['user_id'], ['body']);
         
-        var resettestUserIdPostRequest = {
+        var resetuserUserIdPostRequest = {
             verb: 'post'.toUpperCase(),
-            path: pathComponent + uritemplate('/resettest/{user_id}').expand(apiGateway.core.utils.parseParametersToObject(params, ['user_id'])),
+            path: pathComponent + uritemplate('/resetuser/{user_id}').expand(apiGateway.core.utils.parseParametersToObject(params, ['user_id'])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
         
         
-        return apiGatewayClient.makeRequest(resettestUserIdPostRequest, authType, additionalParams, config.apiKey);
+        return apiGatewayClient.makeRequest(resetuserUserIdPostRequest, authType, additionalParams, config.apiKey);
     };
     
     
-    apigClient.resettestUserIdOptions = function (params, body, additionalParams) {
+    apigClient.resetuserUserIdOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
         
-        var resettestUserIdOptionsRequest = {
+        var resetuserUserIdOptionsRequest = {
             verb: 'options'.toUpperCase(),
-            path: pathComponent + uritemplate('/resettest/{user_id}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            path: pathComponent + uritemplate('/resetuser/{user_id}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
         
         
-        return apiGatewayClient.makeRequest(resettestUserIdOptionsRequest, authType, additionalParams, config.apiKey);
-    };
-    
-    
-    apigClient.resetuserGet = function (params, body, additionalParams) {
-        if(additionalParams === undefined) { additionalParams = {}; }
-        
-        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
-        
-        var resetuserGetRequest = {
-            verb: 'get'.toUpperCase(),
-            path: pathComponent + uritemplate('/resetuser').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
-            body: body
-        };
-        
-        
-        return apiGatewayClient.makeRequest(resetuserGetRequest, authType, additionalParams, config.apiKey);
-    };
-    
-    
-    apigClient.resetuserOptions = function (params, body, additionalParams) {
-        if(additionalParams === undefined) { additionalParams = {}; }
-        
-        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
-        
-        var resetuserOptionsRequest = {
-            verb: 'options'.toUpperCase(),
-            path: pathComponent + uritemplate('/resetuser').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
-            body: body
-        };
-        
-        
-        return apiGatewayClient.makeRequest(resetuserOptionsRequest, authType, additionalParams, config.apiKey);
+        return apiGatewayClient.makeRequest(resetuserUserIdOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     
