@@ -569,7 +569,7 @@ class Answers extends Component {
           disabled={this.state.selected[0] === -1}
           primary={true}
           /*onTouchTap={this.postAnswer.bind(this)}*/
-          /*onClick={this.handleClick(this.props.answers[CurrentAnswerStore.answerLoc])} */
+          /*onClick={this.handleClick(this.props.answers[CurrentAnswerStore.answerLoc])}*/
           onClick={this.postAnswer(this.props.answers[CurrentAnswerStore.answerLoc])}
         />
         <RaisedButton
