@@ -33,11 +33,6 @@ var CurrentQuestionStore = {
   questionId: '1'
 };
 
-// Added this to keep selected answer as a state element
-var CurrentAnswerStore = {
-  answerLoc: ''
-};
-//
 
 TriviaDispatcher.register(function(payload) {
   if (payload.actionType === 'update-user') {
@@ -64,10 +59,6 @@ TriviaDispatcher.register(function(payload) {
       console.log("returned user: " + result.data.usersname + " returned total answered: " + result.data.total_answered + " returned total correct " + result.data.total_correct);
     });
   }
-  if (payload.actionType === 'save-answer'){
-     CurrentAnswerStore.answerLoc = payload.answer;
-     console.log("payload: " + CurrentAnswerStore.answerLoc);
-  } //
 });
 
 /*global apigClientFactory*/
@@ -450,7 +441,6 @@ class Question extends Component {
 
 
 class Answers extends Component {
-
   state = {
     selected: [-1],
     correctAnswer: null,
@@ -466,22 +456,13 @@ class Answers extends Component {
     this.setState({
       selected: selectedRows,
     });
-    TriviaDispatcher.dispatch({
-        actionType: 'save-answer',
-        answer: selectedRows,
-      });
   };
 
-  /*postAnswer(event) {*/
-  postAnswer = (param) => (e) => {
+  postAnswer(event) {
     let apigClient = apigClientFactory.newClient();
     var that = this;
     var answer = this.props.answers[this.state.selected[0]];
-    answer = param;
-    /*console.log(UserStore.idToken);
-    console.log('Parameter', param);
-    console.log('Event', e);
-    console.log("answer: " + answer);*/
+    console.log(UserStore.idToken);
     if (UserStore.idToken) {
       var additionalParams = {
         headers: {
@@ -546,11 +527,6 @@ class Answers extends Component {
 
   }
 
-  handleClick = (param) => (e) => {
-    console.log('Event', e);
-    console.log('Parameter', param);
-  }
-
   render() {
     var that = this;
     return (
@@ -568,9 +544,7 @@ class Answers extends Component {
           label='Submit'
           disabled={this.state.selected[0] === -1}
           primary={true}
-          /*onTouchTap={this.postAnswer.bind(this)}*/
-          /*onClick={this.handleClick(this.props.answers[CurrentAnswerStore.answerLoc])}*/
-          onClick={this.postAnswer(this.props.answers[CurrentAnswerStore.answerLoc])}
+          onTouchTap={this.postAnswer.bind(this)}
         />
         <RaisedButton
           label='Next Question'
