@@ -17,10 +17,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import {Dispatcher} from 'flux'
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
+/*import injectTapEventPlugin from 'react-tap-event-plugin';*/
 
 
-injectTapEventPlugin();
+/*injectTapEventPlugin();*/
 var TriviaDispatcher = new Dispatcher();
 
 var UserStore = {
@@ -189,17 +189,17 @@ class LoggedInUsernameDialog extends Component {
       <FlatButton
         label="Close"
         primary={true}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />,
       <FlatButton
         label="Reset"
         primary={true}
-        onTouchTap={this.handleReset.bind(this)}
+        onClick={this.handleReset.bind(this)}
       />,
       <FlatButton
         label="Log Out"
         primary={true}
-        onTouchTap={this.handleLogOut.bind(this)}
+        onClick={this.handleLogOut.bind(this)}
       />,
     ];
 
@@ -225,7 +225,7 @@ class LoggedInUsernameDialog extends Component {
 
     return (
       <div>
-        <RaisedButton label={this.props.username} onTouchTap={this.handleOpen} />
+        <RaisedButton label={this.props.username} onClick={this.handleOpen} />
         <Dialog
           actions={actions}
           modal={true}
@@ -254,84 +254,7 @@ class UsernamePasswordDialog extends Component {
     this.setState({open: false});
   };
 
-  handleSubmit() {
-    console.alert('must implement')
-  };
-
-  handleUsernameChange(e) {
-    this.setState({
-      username: e.target.value
-    });
-  }
-
-  handlePasswordChange(e) {
-    this.setState({
-      password: e.target.value
-    });
-  }
-
-  render() {
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        onTouchTap={this.handleSubmit.bind(this)}
-      />,
-    ];
-
-    return (
-      <div>
-        <RaisedButton label={this.name} onTouchTap={this.handleOpen} />
-        <Dialog
-          title="Enter a username and password:"
-          actions={actions}
-          modal={true}
-          open={this.state.open}
-        >
-          <TextField
-            hintText="Username Field"
-            floatingLabelText="Username"
-            errorText="This field is required"
-            onChange={this.handleUsernameChange.bind(this)}
-          /><br />
-          <TextField
-            hintText="Password Field"
-            floatingLabelText="Password"
-            type="password"
-            errorText="This field is required"
-            onChange={this.handlePasswordChange.bind(this)}
-          /><br />
-        </Dialog>
-      </div>
-    );
-  }
-}
-class SignUpDialog extends UsernamePasswordDialog {
-  name = 'Sign Up';
-
-  handleSubmit() {
-    let userPool = new CognitoUserPool(poolData);
-    userPool.signUp(this.state.username, this.state.password, [], null, function (err, result) {
-      if (err) {
-        alert(err);
-        return;
-      }
-      let cognitoUser = result.user;
-      console.log('user name is ' + cognitoUser.getUsername());
-    });
-    this.handleClose();
-  }
-}
-
-class LoginDialog extends UsernamePasswordDialog{
-  name = 'Login';
-
-  handleSubmit() {
+  handleSubmit  = () => (e) => {
     let authenticationData = {
       Username: this.state.username,
       Password: this.state.password,
@@ -377,6 +300,130 @@ class LoginDialog extends UsernamePasswordDialog{
 
     });
     this.handleClose();
+  };
+
+  handleUsernameChange(e) {
+    this.setState({
+      username: e.target.value
+    });
+  }
+
+  handlePasswordChange(e) {
+    this.setState({
+      password: e.target.value
+    });
+  }
+
+  render() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        /*onTouchTap={this.handleClose}*/
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        /*onTouchTap={this.handleSubmit.bind(this)}*/
+        onClick={this.handleSubmit(this)}
+      />,
+    ];
+
+    return (
+      <div>
+        <RaisedButton label={this.name} onClick={this.handleOpen} />
+        <Dialog
+          title="Enter a username and password:"
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+        >
+          <TextField
+            hintText="Username Field"
+            floatingLabelText="Username"
+            errorText="This field is required"
+            onChange={this.handleUsernameChange.bind(this)}
+          /><br />
+          <TextField
+            hintText="Password Field"
+            floatingLabelText="Password"
+            type="password"
+            errorText="This field is required"
+            onChange={this.handlePasswordChange.bind(this)}
+          /><br />
+        </Dialog>
+      </div>
+    );
+  }
+}
+class SignUpDialog extends UsernamePasswordDialog {
+  name = 'Sign Up';
+
+  handleSubmit  = () => (e) => {
+    let userPool = new CognitoUserPool(poolData);
+    userPool.signUp(this.state.username, this.state.password, [], null, function (err, result) {
+      if (err) {
+        alert(err);
+        return;
+      }
+      let cognitoUser = result.user;
+      console.log('user name is ' + cognitoUser.getUsername());
+    });
+    this.handleClose();
+  }
+}
+
+class LoginDialog extends UsernamePasswordDialog{
+  name = 'Login';
+
+  handleSubmit() {
+  // Implemented in UsernamePasswordDialog
+    /*let authenticationData = {
+      Username: this.state.username,
+      Password: this.state.password,
+    };
+    let authenticationDetails = new AuthenticationDetails(authenticationData);
+    let userPool = new CognitoUserPool(poolData);
+    let userData = {
+      Username: this.state.username,
+      Pool: userPool
+    };
+    let cognitoUser = new CognitoUser(userData);
+    var that = this;
+    cognitoUser.authenticateUser(authenticationDetails, {
+      onSuccess: function (result) {
+        console.log(result);
+        let apigClient = apigClientFactory.newClient();
+        let additionalParams = {
+          headers: {
+            Authorization: result.getIdToken().getJwtToken(),
+          }
+        };
+        apigClient.userGet({}, null, additionalParams).then( function(user_result){
+          console.log(user_result);
+          TriviaDispatcher.dispatch({
+            actionType: 'update-user',
+            username: that.state.username,
+            idToken: result.getIdToken().getJwtToken(),
+            totalCorrect: user_result.data.total_correct,
+            totalAnswered: user_result.data.total_answered
+          });
+          TriviaDispatcher.dispatch({
+            actionType: 'change-question',
+            questionId: that.getNextQuestion(user_result.data.answers)
+          });
+        }).catch( function(result) {
+          console.log(result)
+          // Add error callback code here.
+        });
+      },
+      onFailure: function (err) {
+        alert(err);
+      },
+
+    });
+    this.handleClose();*/
   }
 
   getNextQuestion(userAnswers) {
@@ -532,7 +579,8 @@ class Answers extends Component {
     }
   }
 
-  nextQuestion() {
+  /*nextQuestion() {*/
+  nextQuestion  = () => (e) => {
     TriviaDispatcher.dispatch({
       actionType: 'change-question',
       questionId: +this.props.questionId + +1,
@@ -576,7 +624,8 @@ class Answers extends Component {
           label='Next Question'
           disabled={this.state.correctAnswer === null}
           secondary={true}
-          onTouchTap={this.nextQuestion.bind(this)}
+          /*onTouchTap={this.nextQuestion.bind(this)}*/
+          onClick={this.nextQuestion(this)}
         />
       </div>
     );
