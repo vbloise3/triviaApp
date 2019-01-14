@@ -41,7 +41,7 @@ var CurrentAnswerStore = {
 
 TriviaDispatcher.register(function(payload) {
   if (payload.actionType === 'update-user') {
-    UserStore.username = payload.username;
+    UserStore.username = payload.username
     UserStore.idToken = payload.idToken;
     UserStore.totalCorrect = payload.totalCorrect;
     UserStore.totalAnswered = payload.totalAnswered
@@ -102,6 +102,7 @@ class App extends Component {
         that.setState({
           currentUser: payload.username
         });
+        console.log("user: " + UserStore.username);
       }
     });
   }
@@ -109,17 +110,25 @@ class App extends Component {
 
   render() {
     let userLogIn = null;
+    let deviceWidthCss = "App-buttons";
     if (this.state.currentUser) {
       userLogIn = <LoggedInUsernameDialog username={this.state.currentUser}/>;
     } else {
       userLogIn = <LoginDialog/>;
     }
 
+    // set mobile layout
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        deviceWidthCss = "App-name-mobile";
+    } else {
+        deviceWidthCss = "App-name";
+    }
+
     return (
       <MuiThemeProvider>
         <div className="App">
           <div className="App-header">
-            <h1>Chalice Trivia</h1>
+            <h1 className={deviceWidthCss}>Chalice Trivia</h1>
             <div className="App-buttons">
                 <div className="App-button-placement">
                     {userLogIn}
@@ -200,7 +209,7 @@ class LoggedInUsernameDialog extends Component {
         label="Log Out"
         primary={true}
         onClick={this.handleLogOut.bind(this)}
-      />,
+      />
     ];
 
     let userTable =  (

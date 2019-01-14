@@ -9,6 +9,16 @@
   color: white;
 }
 
+.App-name {
+  text-align: center;
+}
+
+.App-name-mobile {
+  text-align: center;
+  position: relative;
+  top: 60px;
+}
+
 .App-intro {
   font-size: large;
 }
@@ -19,6 +29,16 @@
   top: -90px;
 }
 
+.App-buttons-mobile {
+  float: right;
+  position: absolute;
+  top: 20px;
+}
+
 .App-button-placement {
   padding-bottom: 0.5em;
+}
+
+.App-buttons-width-user-dialog {
+  width: 120%;
 }
