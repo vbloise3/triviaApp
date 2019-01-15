@@ -21,7 +21,7 @@
             "correct_answer": "Tracie Lammer"
         },
         {
-            "question": "Which Vanguard subdivision did Andy Lazzaro work in before coming to GIFS?",
+            "question": "In which Vanguard subdivision did Andy Lazzaro work before coming to GIFS?",
             "possible_answers": [
                 "Institutional Systems",
                 "Retail Systems",
@@ -38,7 +38,17 @@
                 "Cre'Von LeBlanc",
                 "Chris Long"
             ],
-            "correct_answer": "Retail Investor Group"
+            "correct_answer": "Alshon Jeffery"
+        },
+        {
+            "question": "Which Eagles player donates his entire salary to educational equality charities?",
+            "possible_answers": [
+                "Jason Peters",
+                "Darren Sproles",
+                "Carson Wentz",
+                "Chris Long"
+            ],
+            "correct_answer": "Chris Long"
         },
         {
             "question": "Which of the following is NOT a programming language you can use to write lambda functions?",
@@ -79,6 +89,16 @@
                 "Azure"
             ],
             "correct_answer": "Oracle Cloud"
+        },
+        {
+            "question": "Who will win the Super Bowl this year?",
+            "possible_answers": [
+                "Philadelphia Eagles",
+                "Kevin Vaitis",
+                "New England Patriots",
+                "Kansas City Chiefs"
+            ],
+            "correct_answer": "Kansas City Chiefs"
         }
     ]
 }
