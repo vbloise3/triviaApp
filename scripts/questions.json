@@ -1,54 +1,64 @@
 {
     "questions": [
        {
-            "question": "Where is EuroPython currently being held for 2017?",
+            "question": "What is Andy Lazzaro's favorite food?",
             "possible_answers": [
-                "Rimini, Italy",
-                "Bilbao, Spain",
-                "Florence, Italy",
-                "Berlin, Germany"
+                "Pepperoni Pizza",
+                "Quinoa salad",
+                "Sloppy Joe Sandwich",
+                "Chicken Parm"
             ],
-            "correct_answer": "Rimini, Italy"
+            "correct_answer": "Chicken Parm"
         },
         {
-            "question": "According to PEP8, how many spaces should be used per indentation level?",
+            "question": "Which of the following DON'T have a relative working at Vanguard?",
             "possible_answers": [
-                "One",
-                "Two",
-                "Four",
-                "None. Use tabs"
+                "Kevin Vaitis",
+                "Tracie Lammer",
+                "Srija Meka",
+                "None of the above"
             ],
-            "correct_answer": "Four"
+            "correct_answer": "Tracie Lammer"
         },
         {
-            "question": "Which one of these is not part of the Zen of Python?",
+            "question": "Which Vanguard subdivision did Andy Lazzaro work in before coming to GIFS?",
             "possible_answers": [
-                "Flat is better than nested",
-                "Complex is better than complicated",
-                "Implicit is better than explicit",
-                "Now is better than never"
+                "Institutional Systems",
+                "Retail Systems",
+                "Retail Investor Group",
+                "Retail Brokerage Services"
             ],
-            "correct_answer": "Implicit is better than explicit"
+            "correct_answer": "Retail Investor Group"
         },
         {
-            "question": "Which module was added to the Python Standard Library in version 3.6?",
+            "question": "Which Eagles player wishes he took the fourth quarter off in the Saints playoff loss?",
             "possible_answers": [
-                "secrets",
-                "typing",
-                "asyncio",
-                "pathlib"
+                "Nick Foles",
+                "Alshon Jeffery",
+                "Cre'Von LeBlanc",
+                "Chris Long"
             ],
-            "correct_answer": "secrets"
+            "correct_answer": "Retail Investor Group"
         },
         {
-            "question": "What year was Python 3.0 released?",
+            "question": "Which of the following is NOT a programming language you can use to write lambda functions?",
             "possible_answers": [
-                "2006",
-                "2007",
-                "2008",
-                "2009"
+                "C#",
+                "javascript",
+                "python",
+                "C++"
             ],
-            "correct_answer": "2008"
+            "correct_answer": "C++"
+        },
+        {
+            "question": "An AWS lambda function can execute up to how long?",
+            "possible_answers": [
+                "5 minutes",
+                "10 minutes",
+                "30 seconds",
+                "15 minutes"
+            ],
+            "correct_answer": "15 minutes"
         },
         {
             "question": "What was a major theme at re:Invent 2018?",
@@ -59,6 +69,16 @@
                 "EC2"
             ],
             "correct_answer": "Serverless"
+        },
+        {
+            "question": "Which of the following is not a major cloud computing offering?",
+            "possible_answers": [
+                "AWS",
+                "IBM Cloud",
+                "Oracle Cloud",
+                "Azure"
+            ],
+            "correct_answer": "Oracle Cloud"
         }
     ]
 }
