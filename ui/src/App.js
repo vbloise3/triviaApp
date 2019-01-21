@@ -59,8 +59,8 @@ TriviaDispatcher.register(function(payload) {
           }
     };
     apigClient.resetuserUserIdPost({user_id: UserStore.username}, {totalanswered: 0, totalcorrect: 0}, additionalParams).then( function(result){
-      UserStore.totalAnswered = result.data.total_answered
-      UserStore.totalCorrect = result.data.total_correct
+      UserStore.totalAnswered = result.data.total_answered;
+      UserStore.totalCorrect = result.data.total_correct;
       console.log("returned user: " + result.data.usersname + " returned total answered: " + result.data.total_answered + " returned total correct " + result.data.total_correct);
     });
   }
@@ -81,9 +81,11 @@ var poolData = {
 class App extends Component {
   constructor(props) {
     super(props);
+    let deviceWidthCss = "App-buttons";
     this.state = {
       currentQuestionId: CurrentQuestionStore.questionId,
-      currentUser: UserStore.username
+      currentUser: UserStore.username,
+      deviceWidthCss: deviceWidthCss
     };
 
     var that = this;
@@ -107,28 +109,28 @@ class App extends Component {
     });
   }
 
+  componentDidMount() {
+    // set mobile layout
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        this.setState({deviceWidthCss: "App-name-mobile"});
+    } else {
+        this.setState({deviceWidthCss: "App-name"});
+    }
+  }
 
   render() {
     let userLogIn = null;
-    let deviceWidthCss = "App-buttons";
     if (this.state.currentUser) {
       userLogIn = <LoggedInUsernameDialog username={this.state.currentUser}/>;
     } else {
       userLogIn = <LoginDialog/>;
     }
 
-    // set mobile layout
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        deviceWidthCss = "App-name-mobile";
-    } else {
-        deviceWidthCss = "App-name";
-    }
-
     return (
       <MuiThemeProvider>
         <div className="App">
           <div className="App-header">
-            <h1 className={deviceWidthCss}>Chalice Trivia</h1>
+            <h1 className={this.state.deviceWidthCss}>Chalice Trivia</h1>
             <div className="App-buttons">
                 <div className="App-button-placement">
                     {userLogIn}
@@ -527,6 +529,13 @@ class Answers extends Component {
         answer: selectedRows,
       });
   };
+
+  /*shouldComponentUpdate(nextProps, nextState) {
+    //return ((nextState.questionId !== this.state.questionId) || (nextProps.questionId !== this.props.questionId));
+    console.log("this.props.questionId: " + this.props.questionId);
+    console.log("nextProps.questionId: " + nextProps.questionId);
+    return (this.props.questionId === nextProps.questionId);
+  }*/
 
   /*postAnswer(event) {*/
   postAnswer = (param) => (e) => {
