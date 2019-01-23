@@ -42,3 +42,7 @@
 .App-buttons-width-user-dialog {
   width: 120%;
 }
+
+.App-table-no-highlight td {
+  background-color: transparent !important;
+}

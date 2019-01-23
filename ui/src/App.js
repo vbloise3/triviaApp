@@ -85,7 +85,8 @@ class App extends Component {
     this.state = {
       currentQuestionId: CurrentQuestionStore.questionId,
       currentUser: UserStore.username,
-      deviceWidthCss: deviceWidthCss
+      deviceWidthCss: deviceWidthCss,
+      colorRows: true
     };
 
     var that = this;
@@ -102,7 +103,7 @@ class App extends Component {
         console.log('here');
         console.log(payload);
         that.setState({
-          currentUser: payload.username
+          currentUser: payload.username,
         });
         console.log("user: " + UserStore.username);
       }
@@ -139,7 +140,7 @@ class App extends Component {
             </div>
           </div>
           <div className="App-intro">
-            <QuestionWithAnswers questionId={this.state.currentQuestionId}/>
+            <QuestionWithAnswers questionId={this.state.currentQuestionId} colorRows={this.state.colorRows}/>
           </div>
         </div>
       </MuiThemeProvider>
@@ -469,6 +470,13 @@ class QuestionWithAnswers extends Component {
     this.getQuestion(nextProps.questionId);
   }
 
+  /* componentDidUpdate() {
+    console.log("QuestionWithAnswers shouldComponentUpdate: this.props.questionId: " + this.props.questionId);
+    if ( (this.props.questionId === 1) ) {
+       this.forceUpdate();
+    }
+  } */
+
   getQuestion(questionId) {
     let apigClient = apigClientFactory.newClient();
     var that = this;
@@ -493,7 +501,7 @@ class QuestionWithAnswers extends Component {
     return (
       <div>
         <Question question={this.state.question}/>
-        <Answers answers={this.state.answers} questionId={this.props.questionId}/>
+        <Answers answers={this.state.answers} questionId={this.props.questionId} colorRows={this.props.colorRows}/>
       </div>
     );
   }
@@ -513,7 +521,8 @@ class Answers extends Component {
     selected: [-1],
     correctAnswer: null,
     selectedAnswer: null,
-    isCorrect: null
+    isCorrect: null,
+    colorRows: "#FFFFFF"
   };
 
   isSelected = (index) => {
@@ -530,12 +539,10 @@ class Answers extends Component {
       });
   };
 
-  /*shouldComponentUpdate(nextProps, nextState) {
-    //return ((nextState.questionId !== this.state.questionId) || (nextProps.questionId !== this.props.questionId));
-    console.log("this.props.questionId: " + this.props.questionId);
-    console.log("nextProps.questionId: " + nextProps.questionId);
-    return (this.props.questionId === nextProps.questionId);
-  }*/
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("this.props.colorRows: " + this.props.colorRows);
+    return true;
+  }
 
   /*postAnswer(event) {*/
   postAnswer = (param) => (e) => {
@@ -612,6 +619,7 @@ class Answers extends Component {
 
   }
 
+  // this was for testing
   handleClick = (param) => (e) => {
     console.log('Event', e);
     console.log('Parameter', param);
@@ -621,7 +629,7 @@ class Answers extends Component {
     var that = this;
     return (
       <div>
-        <Table onRowSelection={this.handleRowSelection}>
+        <Table className={this.state.colorRows} onRowSelection={this.handleRowSelection}>
           <TableBody>
             {this.props.answers.map(function(answer, index) {
               return (
@@ -652,7 +660,7 @@ class Answers extends Component {
   getTableRow(answer, index) {
     if (this.state.isCorrect && this.state.selectedAnswer === answer) {
       return (
-        <TableRow selected={this.isSelected(index)} key={index} style={{backgroundColor:'#79d279'}}>
+        <TableRow selected={this.isSelected(index)} key={index} style={{backgroundColor:'#79d279'}}> // this.state.colorRows
           <TableRowColumn>{answer}</TableRowColumn>
         </TableRow>
       );
