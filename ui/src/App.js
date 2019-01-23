@@ -33,7 +33,7 @@ var CurrentQuestionStore = {
   questionId: '1'
 };
 
-// Added this to keep selected answer as a state element
+// Added this to keep selected answer as a state element 
 var CurrentAnswerStore = {
   answerLoc: ''
 };
